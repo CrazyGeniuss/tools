@@ -30,7 +30,7 @@ if(-Not $($(whoami) -eq "nt authority\system")) {
     $psexec_path = $env:temp\exec.exe
     if($psexec_path) {
         Write-Host "    [i] Elevate to SYSTEM"
-        $CommandLine = " -i -s powershell.exe -ExecutionPolicy Bypass `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments 
+        $CommandLine = " -accepteula -nobanner -i -s powershell.exe -ExecutionPolicy Bypass `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments 
         Start-Process -WindowStyle Hidden -FilePath $psexec_path -ArgumentList $CommandLine
         exit
     } else {
