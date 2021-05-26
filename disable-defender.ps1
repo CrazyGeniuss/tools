@@ -73,7 +73,7 @@ return $false
 
 
 
-if (!(Test-Path -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System\EnableSmartScreen")){
+if (!(Test-RegistryValue -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' -Value "EnableSmartScreen")){
 New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableSmartScreen" -Value 0 -PropertyType "DWord"
 }
 
