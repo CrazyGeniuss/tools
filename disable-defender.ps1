@@ -13,9 +13,7 @@ $defenderFolder = "$env:ProgramData\Microsoft\Windows Defender\"
 if (!(Test-Path -Path $defenderFolder)) {
     getOthers
 }
-if(!(GET-Service -Name WinDefend).Status -eq "Running") {
-   getOthers
-} 
+
 
 if(-Not $($(whoami) -eq "nt authority\system")) {
     $IsSystem = $false
