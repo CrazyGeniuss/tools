@@ -129,18 +129,15 @@ if($(GET-Service -Name WinDefend).Status -eq "Running") {
 ##Remove-Item -Force "$link_reboot" -ErrorAction 'ignore' # Remove the link (only execute once after reboot)
 
 if($need_reboot) {
-  ##  $powershell_path = '"$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe"'
-   ## $cmdargs = "-ExecutionPolicy Bypass `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
-   ## $res = New-Item $(Split-Path -Path $link_reboot -Parent) -ItemType Directory -Force
-   ## $WshShell = New-Object -comObject WScript.Shell
-   ## $shortcut = $WshShell.CreateShortcut($link_reboot)
-   ## $shortcut.TargetPath = $powershell_path
-   ## $shortcut.Arguments = $cmdargs
-   ## $shortcut.WorkingDirectory = "$(Split-Path -Path $PSScriptRoot -Parent)"
-   ## $shortcut.Save()
-add-content -path "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\def.vbs" -value 'Set WshShell = CreateObject("WScript.Shell")'
-add-content -path "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\def.vbs" -value 'WshShell.Run "powershell -command ""powershell -executionpolicy bypass -file $env:userprofile\pass.ps1"" ", 0, True'
-add-content -path "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\def.vbs" -value 'Set WshShell = Nothing'
+    $powershell_path = '"$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe"'
+    $cmdargs = "-ExecutionPolicy Bypass `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+    $res = New-Item $(Split-Path -Path $link_reboot -Parent) -ItemType Directory -Force
+    $WshShell = New-Object -comObject WScript.Shell
+    $shortcut = $WshShell.CreateShortcut($link_reboot)
+    $shortcut.TargetPath = $powershell_path
+    $shortcut.Arguments = $cmdargs
+    $shortcut.WorkingDirectory = "$(Split-Path -Path $PSScriptRoot -Parent)"
+    $shortcut.Save()
    shutdown.exe /r /t 0
 } else {
 
