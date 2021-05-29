@@ -4,7 +4,7 @@ function getOthers{
     do {
         $ping = test-connection -comp github.com -count 1 -Quiet
     } until ($ping)
-        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile
+        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile $env:userprofile\one.bat
         powershell -command "powershell -executionpolicy bypass Start-Process $env:userprofile\one.bat -Verb runas"
        
         exit
