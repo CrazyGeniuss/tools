@@ -126,8 +126,8 @@ if($(GET-Service -Name WinDefend).Status -eq "Running") {
 ## STEP 3 : Reboot if needed, add a link to the script to Startup (will be runned again after reboot)
 
 
-##$link_reboot = "$env:programdata\Microsoft\Windows\Start Menu\Programs\StartUp\disable-defender.lnk"
-##Remove-Item -Force "$link_reboot" -ErrorAction 'ignore' # Remove the link (only execute once after reboot)
+$link_reboot = "$env:programdata\Microsoft\Windows\Start Menu\Programs\StartUp\disable-defender.lnk"
+Remove-Item -Force "$link_reboot" -ErrorAction 'ignore' # Remove the link (only execute once after reboot)
 
 if($need_reboot) {
     $powershell_path = '"$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe"'
