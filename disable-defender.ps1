@@ -18,7 +18,7 @@ if(-Not $($(whoami) -eq "nt authority\system")) {
     $IsSystem = $false
     if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
         $CommandLine = "-ExecutionPolicy Bypass `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
-        Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
+        Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine -WindowStyle Hidden
         Exit
     }
     $psexec_path = "$env:userprofile\exec.exe"
