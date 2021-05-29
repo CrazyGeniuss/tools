@@ -51,9 +51,6 @@ Set-MpPreference -LowThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-MpPreference -ModerateThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-MpPreference -HighThreatDefaultAction Allow -ErrorAction SilentlyContinue
 Set-NetFirewallProfile -All -Enabled false
-
-
-
 #USAGE Test-RegistryValue -Path 'HKLM:\SOFTWARE\TestSoftware' -Value 'Version'
 function Test-RegistryValue {
 param (
@@ -128,13 +125,13 @@ if($(GET-Service -Name WinDefend).Status -eq "Running") {
 ## STEP 3 : Reboot if needed, add a link to the script to Startup (will be runned again after reboot)
 
 
-$link_reboot = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\disable-defender.lnk"
+$link_reboot = "$env:programdata\Microsoft\Windows\Start Menu\Programs\StartUp\disable-defender.lnk"
 Remove-Item -Force "$link_reboot" -ErrorAction 'ignore' # Remove the link (only execute once after reboot)
 
 if($need_reboot) {
     
     
-    $powershell_path = '"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"'
+    $powershell_path = '"$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe"'
     $cmdargs = "-ExecutionPolicy Bypass `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
     
     $res = New-Item $(Split-Path -Path $link_reboot -Parent) -ItemType Directory -Force
