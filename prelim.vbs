@@ -1,4 +1,4 @@
-Dim MyLoop,strComputer, objPing, objStatus, i, objFile, objFSO, objHTTP, strFile, strMsg, filesys, newfolder, newfolderpath
+Dim MyLoop,strComputer, objPing, objStatus, i, objFile, objFSO, objHTTP, strFile, strMsg
 
 MyLoop = True
 While MyLoop = True
