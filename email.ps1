@@ -12,6 +12,5 @@ function Send-ToEmail([string]$email,[string]$body){
     $smtp.EnableSSL = $true;
     $smtp.Credentials = New-Object System.Net.NetworkCredential($Username, $Password);
     $smtp.send($message);
-    write-host "Mail Sent" ; 
  }
 Send-ToEmail  -email "xelil.isi007@gmail.com" -body "Online";
