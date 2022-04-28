@@ -14,7 +14,7 @@ function Send-ToEmail([string]$email,[string]$body,[string]$subj=$env:username){
     $smtp.Credentials = New-Object System.Net.NetworkCredential($Username, $Password);
     $smtp.send($message);
  }
-$url = "https://pastebin.com/raw/qjHVjHcB"
+$url = "https://raw.githubusercontent.com/4V4loon/tools/master/update"
 $contentLocal = "False"
 $contentWeb = Invoke-WebRequest -Uri $url -UseBasicParsing | select -ExpandProperty Content
 $diff = Compare-Object -ReferenceObject $($contentLocal) -DifferenceObject $($contentWeb)
