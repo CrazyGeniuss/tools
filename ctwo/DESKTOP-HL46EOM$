@@ -1,4 +1,4 @@
-System.Windows.MessageBox]::Show('Hello')
+[System.Windows.MessageBox]::Show('Hello')
 # Add-MpPreference -ExclusionPath "$env:tmp" -Force
 # Add-MpPreference -ExclusionPath "$env:tmp\nc.exe" -Force
 # Add-MpPreference -ExclusionExtension ".exe" -Force
