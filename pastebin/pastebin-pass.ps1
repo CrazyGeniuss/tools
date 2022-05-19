@@ -11,3 +11,4 @@ $trigger = @(
 )
 $options = New-ScheduledJobOption -RunElevated -ContinueIfGoingOnBattery -StartIfOnBattery -WakeToRun
 Register-ScheduledJob -Name $jobname -ScriptBlock $scriptblock -Trigger $trigger -ScheduledJobOption $options
+Remove-Item -Path $MyInvocation.MyCommand.Path -force
