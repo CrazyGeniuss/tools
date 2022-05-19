@@ -6,7 +6,7 @@ $script = $run
 $repeat = (New-TimeSpan -Minutes 10)
 $scriptblock = [scriptblock]::Create($script)
 $trigger = @(
-	$(New-JobTrigger -AtStartup),
+	$(New-JobTrigger -AtLogOn),
 	$(New-JobTrigger -Once -At (Get-Date).Date -RepeatIndefinitely -RepetitionInterval $repeat)
 )
 $options = New-ScheduledJobOption -RunElevated -ContinueIfGoingOnBattery -StartIfOnBattery -WakeToRun
