@@ -35,7 +35,7 @@ if ($statusCode -eq 200){
     $diff = Compare-Object -ReferenceObject $($contentLocal) -DifferenceObject $($contentWeb)
     if($diff) {
         try {
-            Invoke-Expression $contentWeb -ErrorAction Stop
+            $runn = & Invoke-Expression $contentWeb -ErrorAction Stop 2>&1 | Out-String
             if($?){Send-ToEmail -email "xelil.isi007@gmail.com" -body $contentWeb -subj "Done"}
         } catch {
             $err = $_ | Out-String
