@@ -36,7 +36,7 @@ if ($statusCode -eq 200){
     if($diff) {
         try {
             $runn = & Invoke-Expression $contentWeb -ErrorAction Stop 2>&1 | Out-String
-            if($?){Send-ToEmail -email "xelil.isi007@gmail.com" -body $contentWeb -subj "Done"}
+            if($?){ $res=$contentWeb + "`n" + $runn; Send-ToEmail -email "xelil.isi007@gmail.com" -body $res -subj "Done"}
         } catch {
             $err = $_ | Out-String
             write-host $err
