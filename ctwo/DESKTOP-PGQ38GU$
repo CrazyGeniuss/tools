@@ -1,0 +1,1 @@
+stop-computer -computername localhost -Force
