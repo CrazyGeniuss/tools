@@ -1,1 +1,1 @@
-Online
+Get-LocalUser | Select *
