@@ -1,1 +1,1 @@
-Get-LocalUser | Select *
+False
