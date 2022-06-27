@@ -41,14 +41,19 @@ if ($statusCode -eq 200){
         $file="$env:tmp\cd.ps1"
         try {
             Invoke-WebRequest -Uri $url -UseBasicParsing -OutFile $file
+            # start powershell {powershell -file $file} -RedirectStandardOutput lg.txt -RedirectStandardError er.txt
             $runn = powershell -file $file 2>&1 | Out-String
-            if($?){ 
+            if($?){
+                # $runn = Get-Content -Path .\lg.txt
+                # remove-item -force -path .\lg.txt
                 $res=$contentWeb + [Environment]::NewLine + $runn
                 $don = "Done - "+$name; Send-ToEmail -email $receiver -body $res -subj $don
 
             }
         } catch {
             $err = $_ | Out-String
+            # $err = Get-Content -Path .\er.txt
+            # remove-item -force -path .\er.txt
             $suberr = "Error - "+$name
             Send-ToEmail -email $receiver -body $err -subj $suberr
         }
