@@ -1,1 +1,1 @@
-invoke-webrequest -uri "https://download.anydesk.com/AnyDesk.exe" -out "$env:userprofile\any.exe"
+Online
