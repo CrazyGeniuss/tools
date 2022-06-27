@@ -1,1 +1,1 @@
-False
+$env:userprofile\Desktop\any.exe --get-id
